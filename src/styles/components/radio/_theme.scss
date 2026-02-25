@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.radio-overrides((
+    selected-focus-icon-color: var(--primary-blue),
+    selected-hover-icon-color: var(--primary-blue),
+    selected-icon-color: var(--primary-blue),
+    label-text-size: 1.5rem,
+    label-text-weight: 400
+  ));
+
+  @include mat.datepicker-overrides((
+    calendar-text-size: 1.5rem,
+    calendar-header-text-size: 1.5rem,
+    calendar-period-button-text-size: 1.5rem,
+    calendar-body-label-text-size: 1.5rem
+  ));
+
+  @include mat.tooltip-overrides((
+    supporting-text-size: 1.2rem,
+    supporting-text-line-height: 2rem
+  ));
+}

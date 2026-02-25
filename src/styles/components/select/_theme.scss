@@ -1,0 +1,8 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.select-overrides((
+    focused-arrow-color: var(--primary-blue),
+    trigger-text-size: var(--font-size-md),
+  ));
+}

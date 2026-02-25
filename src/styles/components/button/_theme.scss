@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.button-overrides((
+    text-label-text-color: var(--primary-blue),
+    text-label-text-size: 14px,
+    text-label-text-weight: var(--font-weight-normal),
+  ));
+}

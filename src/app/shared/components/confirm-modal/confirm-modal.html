@@ -1,0 +1,26 @@
+<div class="dialog-header">
+    <button mat-icon-button mat-dialog-close class="close-button" [disabled]="isSubmitting()">
+        <mat-icon>close</mat-icon>
+    </button>
+    <div class="header-content">
+        <h2 class="text-[24px]">Confirmar accion</h2>
+    </div>
+</div>
+
+<mat-dialog-content [style.overflow-y]="'hidden'">
+    <p class="text-[16px] font-[400] leading-[var(--line-height-tight)]">{{ alertMessage() }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="pt-6">
+        <button mat-stroked-button matbutton="outlined" mat-dialog-close class="cancel-button"
+            [disabled]="isSubmitting()">Cancelar</button>
+        <button mat-flat-button matbutton="filled" (click)="onConfirm()" [disabled]="isSubmitting()"
+            class="confirm-button">
+            @if (isSubmitting()) {
+            <mat-spinner diameter="20"></mat-spinner>
+            }
+            {{ isSubmitting() ? 'en proceso...' : action() }}
+        </button>
+    </div>
+</mat-dialog-actions>

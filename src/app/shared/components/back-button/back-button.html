@@ -1,0 +1,7 @@
+<div class="back-link" (click)="onBackClick()" role="button" tabindex="0" (keydown.enter)="onBackClick()"
+    (keydown.space)="onBackClick()">
+    <svg width="13" height="13" fill="none" class="back-icon" stroke="currentColor">
+        <use [attr.href]="'/icons/sprites.svg#left-arrow'" />
+    </svg>
+    <span>{{ text() }}</span>
+</div>

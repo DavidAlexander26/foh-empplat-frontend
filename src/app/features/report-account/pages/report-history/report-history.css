@@ -1,0 +1,126 @@
+
+.report-button {
+  font-size: 14px;
+  text-transform: none;
+  font-weight: bold;
+  min-width: fit-content;
+}
+
+.filter-options {
+  margin: 36px;
+  gap: 10px;
+}
+
+.report-body{
+  margin-top: 36px;
+}
+
+.filter-box{
+  justify-content: space-between;
+}
+
+.filter-dates{
+  gap: 24px
+}
+
+.filter-item {
+  justify-content: end;
+}
+
+.report-button.mdc-button {
+  padding: 0px 16px !important;
+  color: var(--primary-dark-label) !important;
+  font-weight: bold;
+  position: relative;
+}
+
+.report-button.active-tab {
+  color: var(--primary-blue) !important;
+}
+
+.report-button.active-tab::after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: -3px;
+  height: 2px;  /* Grosor */
+  background-color: currentColor;
+}
+
+
+
+@media (max-width: 768px) {
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .filter-section {
+    padding-top: 5px;
+  }
+
+  .flex.items-end {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0px;
+  }
+
+  .filter-options {
+    margin: 5px 36px;
+    gap: 0px;
+  }
+
+  /*Se modifica el componente general*/
+  .mdc-card {
+    padding: var(--spacing-lg) !important;
+  }
+
+  .mat-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .report-button {
+    font-size: 12px;
+    padding: 8px 16px;
+    white-space: initial;
+  }
+
+  .report-body{
+    margin-top: 16px;
+  }
+
+  .mat-card-title {
+    font-size: 1.6rem;
+  }
+
+
+  .mat-card {
+    padding: 16px;
+  }
+  
+  .filter-box{
+    flex-direction: column;
+  }
+
+  .filter-dates{
+    gap: 8px;
+    width: 100%;
+  }
+
+  .filter-dni{
+    width: 100%;
+  }
+
+  .filter-label{
+    font-size: var(--font-size-base);
+  }
+
+  .filter-item {
+    gap: 0px;
+    justify-content: center;
+    width: 100%;
+  }
+}

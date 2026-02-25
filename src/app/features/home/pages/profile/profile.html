@@ -1,0 +1,154 @@
+<!-- Contenido principal -->
+<section class="pt-[36px]">
+    <foh-back-button text="Volver al inicio" route="/inicio" />
+
+    <foh-grid>
+        <foh-col [xs]="12">
+            <mat-card appearance="outlined" outlined-outline-color="white"
+                class="p-[36px] bg-white flex flex-col gap-[16px]">
+                <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+                    Mi perfil
+                </h2>
+                <div class="flex items-center gap-[12px]">
+                    <svg width="30" height="30" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                        <use [attr.href]="'/icons/sprites.svg#user'" />
+                    </svg>
+                    <p class="text-[#6B7280] text-[16px] font-[400] leading-[var(--line-height-tight)]">
+                        Información de la cuenta y perfil
+                    </p>
+                </div>
+            </mat-card>
+        </foh-col>
+
+        <!-- Información del perfil -->
+        <foh-col [xs]="12">
+            <mat-card appearance="outlined" class="profile-info-card">
+                <mat-card-header>
+                    <mat-card-title>Información del perfil</mat-card-title>
+                </mat-card-header>
+                <mat-card-content [style.width]="'100%'" [style.max-width]="'980px'">
+                    <div class="profile-grid">
+                        <!-- Fila 1 -->
+                        <div class="profile-item">
+                            <div class="profile-label text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">Nombre</div>
+                            <div class="profile-value text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">{{ userInfo?.nombre }}</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">Tipo de documento</div>
+                            <div class="profile-value text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">{{ userInfo?.tipoDocumento }}</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">Número de documento</div>
+                            <div class="profile-value text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">{{ userInfo?.dni }}</div>
+                        </div>
+
+                        <!-- Fila 2 -->
+                        <div class="profile-item">
+                            <div class="profile-label text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">Correo</div>
+                            <div class="profile-value text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">{{ userInfo?.correo }}</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">Celular</div>
+                            <div class="profile-value text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">{{ userInfo?.celular }}</div>
+                        </div>
+                        <div class="profile-item">
+                            <!-- Espacio vacío -->
+                        </div>
+
+                        <!-- Fila 3 -->
+                        <div class="profile-item profile-item-full">
+                            <div class="profile-label text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">Perfiles</div>
+                            <div class="profile-value text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">{{ userInfo?.perfiles }}</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </foh-col>
+
+
+
+        <!-- Información de cuentas -->
+        <foh-col [xs]="12" class="accounts-sections">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <svg mat-card-avatar width="18" height="18">
+                        <use [attr.href]="'/icons/sprites.svg#account18'" />
+                    </svg>
+                    <mat-card-title>Información de cuenta</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <!-- Tabla de cuentas responsiva -->
+                    <div class="table-scroll-container">
+                        <table mat-table [dataSource]="dataSource" matSort #sort="matSort">
+                            <!-- Columna Número de Cuenta -->
+                            <ng-container matColumnDef="numeroCuenta">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Número de Cuenta</th>
+                                <td mat-cell *matCellDef="let account">
+                                    <section>
+                                        <span>{{ account.numeroCuenta }}</span>
+                                        <button mat-icon-button (click)="copyToClipboard(account.numeroCuenta)"
+                                            matTooltip="Copiar número de cuenta">
+                                            <mat-icon>content_copy</mat-icon>
+                                        </button>
+                                    </section>
+                                </td>
+                            </ng-container>
+
+                            <!-- Columna CCI -->
+                            <ng-container matColumnDef="cci">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>CCI</th>
+                                <td mat-cell *matCellDef="let account">
+                                    <section>
+                                        <span>{{ account.cci }}</span>
+                                        <button mat-icon-button (click)="copyToClipboard(account.cci)"
+                                            matTooltip="Copiar CCI">
+                                            <mat-icon>content_copy</mat-icon>
+                                        </button>
+                                    </section>
+                                </td>
+                            </ng-container>
+
+                            <!-- Columna Saldo Disponible -->
+                            <ng-container matColumnDef="saldoDisponible">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Saldo Disponible</th>
+                                <td mat-cell *matCellDef="let account">
+                                    <span>{{ formatAmount(account.saldoDisponible) }}</span>
+                                </td>
+                            </ng-container>
+
+                            <!-- Columna Saldo Retenido -->
+                            <ng-container matColumnDef="saldoRetenido">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Saldo Retenido</th>
+                                <td mat-cell *matCellDef="let account">
+                                    <span>{{ formatAmount(account.saldoRetenido) }}</span>
+                                </td>
+                            </ng-container>
+
+                            <!-- Columna Moneda -->
+                            <ng-container matColumnDef="moneda">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Moneda</th>
+                                <td mat-cell *matCellDef="let account">
+                                    <span>{{ account.moneda }}</span>
+                                </td>
+                            </ng-container>
+
+                            <!-- Columna Estado -->
+                            <ng-container matColumnDef="estado">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado de la Cuenta</th>
+                                <td mat-cell *matCellDef="let account">
+                                    <mat-chip [ngClass]="getStatusClass(account.estado)">
+                                        {{ account.estado }}
+                                    </mat-chip>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                        </table>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </foh-col>
+    </foh-grid>
+</section>

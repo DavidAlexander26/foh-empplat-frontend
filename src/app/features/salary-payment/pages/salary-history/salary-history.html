@@ -1,0 +1,108 @@
+<section class="pt-[36px]">
+    <foh-back-button text="Volver al inicio" route="/inicio" />
+    <foh-grid class="gap-[18px] mt-[36px]">
+        <foh-col [xs]="12">
+            <mat-card appearance="outlined" outlined-outline-color="white"
+                class="p-[36px] bg-white flex flex-col gap-[16px]">
+                <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+                    Listado de lotes de pago de haberes
+                </h2>
+                <div class="flex items-center">
+                    <p class="text-[#6B7280] text-[16px] font-[400] leading-[var(--line-height-tight)]">
+                        Gestiona los lotes de pago para colaboradores
+                    </p>
+                </div>
+            </mat-card>
+        </foh-col>
+        <foh-col [xs]="12">
+
+            <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+
+                <mat-card-actions class="gap-[24px]" [style.padding]="0">
+                    <button mat-flat-button matButton="filled" routerLink="/pago-haberes/nuevo">
+                        Nueva
+                    </button>
+
+                    <button type="button" mat-button matButton="text">
+                        <span class="flex gap-[6px]">
+                            <span class="leading-[var(--line-height-tight)]">Descargar macro</span>
+                            <svg width="18" height="18" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                                <use [attr.href]="'/icons/sprites.svg#download'" />
+                            </svg>
+                        </span>
+                    </button>
+                </mat-card-actions>
+
+            </mat-card>
+        </foh-col>
+        <foh-col [xs]="12">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>Registros</mat-card-title>
+                </mat-card-header>
+                <mat-card-content [style.padding]="0">
+                    <div class="table-container max-h-[700px] overflow-auto">
+                        <table mat-table [dataSource]="dataSource" matSort class="w-[1400px]" >
+                            <ng-container matColumnDef="idLote">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header>ID Lote</th>
+                              <td mat-cell *matCellDef="let element">{{ element.idLote }}</td>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="nombreLote">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Lote</th>
+                              <td mat-cell *matCellDef="let element">{{ element.nombreLote }}</td>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="fechadeCreacion">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de Creación</th>
+                              <td mat-cell *matCellDef="let element">{{ element.fechadeCreacion }}</td>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="monto">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header>Monto</th>
+                              <td mat-cell *matCellDef="let element">{{ element.monto }}</td>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="moneda">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header>Moneda</th>
+                              <td mat-cell *matCellDef="let element">{{ element.moneda }}</td>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="numeroLineas">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header>Número de Líneas</th>
+                              <td mat-cell *matCellDef="let element">{{ element.numeroLineas }}</td>
+                            </ng-container>
+                          
+                            <ng-container matColumnDef="estado">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+                              <td mat-cell *matCellDef="let element">
+                                <mat-chip [ngClass]="getEstadoClass(element.estado)">
+                                  {{ element.estado }}
+                                </mat-chip>
+                              </td>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="accion">
+                              <th mat-header-cell *matHeaderCellDef>Acción</th>
+                              <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                                <button mat-icon-button  [matMenuTriggerFor]="menu" #menuTrigger>
+                                  <mat-icon>more_horiz</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                  <button mat-menu-item (click)="deleteSlr(element)">Eliminar</button>
+                                </mat-menu>
+                              </td>
+                            </ng-container>
+                          
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row (click)="showDetails(row)" *matRowDef="let row; columns: displayedColumns"></tr>
+                          </table>
+                        </div>
+                        <mat-paginator [length]="totalRecords()" [pageSize]="size()" [pageIndex]="page()"
+                          [pageSizeOptions]="pageSizeOptions" aria-label="Seleccionar página">
+                        </mat-paginator>
+                </mat-card-content>
+            </mat-card>
+        </foh-col>
+    </foh-grid>
+</section>

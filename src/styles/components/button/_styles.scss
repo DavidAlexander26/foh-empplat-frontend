@@ -1,0 +1,36 @@
+button[matbutton="filled"] {
+  border-radius: 4px;
+  padding-inline: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 36px;
+}
+
+button[type="button"][matbutton="text"] {
+  mat-icon{
+    font-size: 1.8rem;
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button[matButton="outlined"] {
+  border-radius: 4px;
+  padding-inline: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 36px;
+  --mat-sys-outline: var(--primary-light-blue);
+  --mat-sys-primary: var(--primary-dark);
+}
+
+button[matButton]  .mdc-button__label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}

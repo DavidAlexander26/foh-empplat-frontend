@@ -1,0 +1,35 @@
+mat-stepper {
+  .mat-horizontal-content-container {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .mat-horizontal-stepper-header-container {
+    margin: auto !important;
+    width: 100% !important;
+  }
+}
+.new-transfer {
+  mat-stepper{
+    .mat-horizontal-stepper-header-container {
+      max-width: 670px !important;
+    } 
+  }
+}
+
+.new-salary mat-stepper .mat-horizontal-stepper-header-container {
+  max-width: 939px !important;
+}
+
+mat-step-header[tabindex="0"] {
+  padding-left: 0 !important;
+}
+
+mat-step-header[tabindex="-1"] {
+  padding-right: 0 !important;
+}
+
+
+.mat-step-icon.mat-step-icon-state-number .mat-step-icon-content{
+  font-size: 1.2rem;
+  font-weight: 400;
+}

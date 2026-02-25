@@ -1,0 +1,7 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.sidenav-overrides((
+    content-background-color: var(--background-light)
+  ));
+}

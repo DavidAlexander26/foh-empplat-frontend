@@ -1,0 +1,54 @@
+<!-- operaciones-frecuentes.component.html -->
+@if (isLoading()) {
+<div class="spinner-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="leading-[var(--line-height-tight)] font-[400] text-[16px]">Obteniendo información...</p>
+</div>
+}
+@else {
+<div class="dialog-header">
+    <button mat-icon-button mat-dialog-close class="close-button">
+        <mat-icon>close</mat-icon>
+    </button>
+    <div class="header-content">
+        <h2 class="text-[2rem] font-[500] leading-[var(--line-height-tight)] text-[#333]">Operaciones frecuentes</h2>
+        <p class="subtitle">Selecciona una operación guardada para crear una nueva transferencia basada en la plantilla.</p>
+    </div>
+</div>
+
+<mat-dialog-content>
+    <mat-radio-group [(ngModel)]="selectedOperationId">
+        <div class="operations-list">
+            @for (frequent of frequentOperations(); track frequent.frequentOperationId) {
+                <!--  -->
+            <div class="operation-card"  [class.selected]="selectedOperationId === frequent.frequentOperationId">
+                <mat-radio-button [value]="frequent.frequentOperationId" class="operation-radio">
+                    <div class="operation-content">
+                        <div class="operation-info">
+                            <h3 class="operation-title">{{ frequent.operationName }}</h3>
+                            <div class="operation-detail">
+                                <p class="operation-beneficiary">{{ frequent.recipientName }}</p>
+                                <p class="operation-account">{{ frequent.recipientAccountNumber ?? frequent.recipientCci }}</p>
+                            </div>
+                        </div>
+                        <svg  width="24" height="24" viewBox="0 0 24 24"  stroke="currentColor" class="text-[#1A73E8] m-auto mr-[8px]"
+                            (click)="deleteOperation($event, frequent)"
+                        >
+                            <use href="/icons/sprites.svg#trash"></use>
+                        </svg>
+                    </div>
+                </mat-radio-button>
+            </div>
+            }
+            @empty {
+                <p  class="text-[1.5rem] leading-[var(--line-height-tight)] text-[#333]">No hay operaciones frecuentes disponibles</p>
+            }
+        </div>
+    </mat-radio-group>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-stroked-button class="secondary-button" mat-dialog-close>Salir</button>
+    <button mat-flat-button class="primary-button" [disabled]="!selectedOperationId" (click)="continuar()">Continuar</button>
+</mat-dialog-actions>
+}

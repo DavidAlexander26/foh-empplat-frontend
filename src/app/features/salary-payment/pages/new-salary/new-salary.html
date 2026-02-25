@@ -1,0 +1,429 @@
+<section class="pt-[36px] new-salary">
+    <foh-back-button text="Volver al listado" route="/pago-haberes" />
+    <mat-stepper [linear]="true" #stepper class="m-0 mt-[24px]" #salaryStepper>
+        <mat-step [stepControl]="uploadForm" [editable]="false">
+            <ng-template matStepLabel>Preparación</ng-template>
+            <form [formGroup]="uploadForm">
+                <foh-grid class="gap-[18px] mt-[36px]">
+                    <foh-col [xs]="12">
+                        <mat-card appearance="outlined" outlined-outline-color="white"
+                            class="p-[36px] bg-white flex flex-col gap-[16px]">
+                            <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+                                Pago de haberes masivo
+                            </h2>
+                            <div class="flex items-center gap-[12px]">
+                                <svg width="30" height="30" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                                    <use [attr.href]="'/icons/sprites.svg#payment'" />
+                                </svg>
+                                <p class="text-[#6B7280] text-[16px] font-[400] leading-[var(--line-height-tight)]">
+                                    Carga masiva de pagos para colaboradores
+                                </p>
+                            </div>
+                        </mat-card>
+                    </foh-col>
+
+                    <foh-col [xs]="12">
+                        <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+
+                            <mat-card-actions class="gap-[24px]" [style.padding]="0">
+                                <div class="flex justify-between w-full">
+                                    <div class="flex gap-[12px]">
+                                        <button type="button" mat-button matButton="text">
+                                            <span class="flex gap-[6px]">
+                                                <span class="leading-[var(--line-height-tight)]">Descargar macro</span>
+                                                <svg width="18" height="18" fill="none" stroke="currentColor"
+                                                    class="text-[#1A73E8]">
+                                                    <use [attr.href]="'/icons/sprites.svg#download'" />
+                                                </svg>
+                                            </span>
+                                        </button>
+                                        <button type="button" mat-button matButton="text" (click)="fileInput.click()">
+                                            <span class="flex gap-[6px]">
+                                                <span class="leading-[var(--line-height-tight)]">Cargar archivo de
+                                                    lotes</span>
+                                                <svg width="18" height="18" fill="none" stroke="currentColor"
+                                                    class="text-[#1A73E8]">
+                                                    <use [attr.href]="'/icons/sprites.svg#upload'" />
+                                                </svg>
+                                            </span>
+                                        </button>
+                                        <input #fileInput type="file" hidden (change)="onFileSelected($event)"
+                                            accept=".txt,.csv">
+                                    </div>
+                                    <button mat-flat-button matButton="filled" 
+                                        [disabled]="!uploadForm.valid || isValidating()"
+                                        (click)="validateFile()">
+                                        {{ isValidating() ? 'Validando...' : 'Validar archivo' }}
+                                    </button>
+                                </div>
+                            </mat-card-actions>
+
+                        </mat-card>
+                    </foh-col>
+
+                    <foh-col [xs]="12">
+                        <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white dropzone"
+                            (click)="onDropzoneClick()" [class.dragover]="isDragging()" (dragover)="onDragOver($event)"
+                            (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+
+                            @if (!fileSelected()) {
+                            <svg width="48" height="48" fill="none" stroke="currentColor" class="text-[#9CA3AF]">
+                                <use [attr.href]="'/icons/sprites.svg#upload'" />
+                            </svg>
+
+                            <p class="text-[#374151] text-[16px] font-[500]">
+                                Puede arrastrar y soltar el archivo aquí
+                            </p>
+
+                            <p class="text-[#6B7280] text-[14px]">
+                                Solo se permiten archivos .txt o .csv
+                            </p>
+                            }
+
+                            @if (fileSelected()) {
+                            <div class="archivo-seleccionado">
+                                <h3>Información del archivo cargado</h3>
+                                <div class="file-info">
+                                    <p class="label">Nombre de archivo</p>
+                                    <p class="value">{{ fileName() }}</p>
+                                </div>
+                            </div>
+                            }
+                        </mat-card>
+                    </foh-col>
+                </foh-grid>
+            </form>
+
+        </mat-step>
+        <mat-step [editable]="false">
+            <ng-template matStepLabel>Validación</ng-template>
+            <form [formGroup]="validationForm">
+                <foh-grid class="gap-[18px] mt-[36px]">
+                    <foh-col [xs]="12">
+                        <mat-card appearance="outlined" outlined-outline-color="white"
+                            class="p-[36px] bg-white flex flex-col gap-[16px]">
+                            <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+                                Pago de haberes masivo
+                            </h2>
+                            <div class="flex items-center gap-[12px]">
+                                <svg width="30" height="30" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                                    <use [attr.href]="'/icons/sprites.svg#payment'" />
+                                </svg>
+                                <p class="text-[#6B7280] text-[16px] font-[400] leading-[30px]">
+                                    Carga masiva de pagos para colaboradores, donde no deberá haber observaciones en el
+                                    archivo enviado y deberá escribir el nombre del lote para poder enviar el archivo
+                                </p>
+                            </div>
+                        </mat-card>
+                    </foh-col>
+    
+                    <foh-col [xs]="12">
+                        <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+                            <div>
+                                <h3
+                                    class="text-[1.8rem] font-[500] text-[#333333] leading-[var(--line-height-tight)] mb-[36px]">
+                                    Información de resumen</h3>
+                                <div class="flex flex-col gap-[36px]">
+                                    <div class="summary-row header">
+                                        <mat-form-field appearance="outline" class="max-w-[339px] w-full"
+                                            subscriptSizing="dynamic">
+                                            <mat-label>Nombre de lote (*)</mat-label>
+                                            <input matInput formControlName="nombreLote" />
+                                            @if (validationForm.get('nombreLote')?.hasError('required') && validationForm.get('nombreLote')?.touched) {
+                                                <mat-error>El nombre del lote es requerido</mat-error>
+                                            }
+                                            @if (validationForm.get('nombreLote')?.hasError('minlength')) {
+                                                <mat-error>Mínimo 3 caracteres</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="flex flex-col gap-[24px]">
+                                        <div class="flex flex-wrap gap-[24px]">
+                                            <div class="flex flex-col min-w-[230px] gap-[6px]">
+                                                <span class="item-label">Monto</span>
+                                                <span class="item-value">12,000.00</span>
+                                            </div>
+                                            <div class="flex flex-col min-w-[230px] gap-[6px]">
+                                                <span class="item-label">Moneda</span>
+                                                <span class="item-value">DÓLARES</span>
+                                            </div>
+                                        </div>
+    
+                                        <div class="flex flex-wrap gap-[24px]">
+                                            <div class="flex flex-col min-w-[230px] gap-[6px]">
+                                                <span class="item-label">Cantidad de líneas</span>
+                                                <span class="item-value">100</span>
+                                            </div>
+                                            <div class="flex flex-col min-w-[230px] gap-[6px]">
+                                                <span class="item-label">Líneas válidas</span>
+                                                <span class="item-value">80</span>
+                                            </div>
+                                            <div class="flex flex-col min-w-[230px] gap-[6px]">
+                                                <span class="item-label">Líneas observadas</span>
+                                                <span class="item-value">20</span>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+    
+                        </mat-card>
+                    </foh-col>
+    
+                    <foh-col [xs]="12">
+                        <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+    
+                            <mat-card-actions class="gap-[24px]" [style.padding]="0">
+                                <div class="flex justify-between w-full">
+                                    <button type="button" mat-button matButton="text" 
+                                        [disabled]="!hasObservations()"
+                                        (click)="downloadObservations()">
+                                        <span class="flex gap-[6px]">
+                                            <span class="leading-[var(--line-height-tight)]">Descargar observaciones</span>
+                                            <svg width="18" height="18" fill="none" stroke="currentColor"
+                                            [class.text-[#1A73E8]]="hasObservations()">
+                                                <use [attr.href]="'/icons/sprites.svg#download'" />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <div class="flex gap-[12px]">
+                                        <button type="button" mat-button matButton="text" 
+                                            [disabled]="!isFileValid()"
+                                            (click)="fileInputReload.click()">
+                                            <span class="flex gap-[6px]">
+                                                <span class="leading-[var(--line-height-tight)]">Volver a cargar el
+                                                    archivo</span>
+                                                <svg width="18" height="18" fill="none" stroke="currentColor"
+                                                    class="text-[#1A73E8]">
+                                                    <use [attr.href]="'/icons/sprites.svg#reload'" />
+                                                </svg>
+                                            </span>
+                                        </button>
+                                        <input #fileInputReload type="file" hidden 
+                                            (change)="onReloadFile($event)"
+                                            accept=".txt,.csv">
+                                        <button type="button" mat-flat-button matButton="filled"
+                                            [disabled]="!canSubmitFile() || validationForm.errors"
+                                            (click)="submitFile()">
+                                            Enviar archivo
+                                        </button>
+                                    </div>
+                                </div>
+    
+                            </mat-card-actions>
+    
+                        </mat-card>
+                    </foh-col>
+    
+                    <foh-col [xs]="12">
+                        <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+                            <div class="flex flex-col gap-[24px]">
+                                <h3
+                                class="text-[1.8rem] font-[500] text-[#333333] leading-[var(--line-height-tight)] mb-[12px]">
+                                    Información de líneas
+                                </h3>
+                                <div class="flex gap-[24px]">
+                                    <mat-form-field appearance="outline" class="max-w-[230px] w-full">
+                                        <mat-label>Programar hora</mat-label>
+                                        <input matInput formControlName="programarHora"
+                                          [matTimepicker]="timepicker">
+                                        <mat-timepicker interval="15min" #timepicker/>
+                                        <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="max-w-[230px] w-full">
+                                        <mat-label>Programar día</mat-label>
+                                        <input matInput formControlName="programarDia"
+                                            [matDatepicker]="datePicker" matTooltipDisabled 
+                                            [min]="minDate" placeholder="DD/MM/YYYY">
+                                        <mat-datepicker-toggle matIconSuffix [for]="datePicker" matTooltipDisabled></mat-datepicker-toggle>
+                                        <mat-datepicker #datePicker matTooltipDisabled></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-card-content [style.padding]="0">
+                                        <div class="table-container max-h-[700px] overflow-auto">
+                                            <table mat-table [dataSource]="dataSource" matSort class="w-[1400px]">
+                                                <ng-container matColumnDef="cuentaCargo">
+                                                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Cuenta Cargo</th>
+                                                  <td mat-cell *matCellDef="let element">{{ element.cuentaCargo }}</td>
+                                                </ng-container>
+                                              
+                                                <ng-container matColumnDef="monto">
+                                                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Monto</th>
+                                                  <td mat-cell *matCellDef="let element">{{ element.monto }}</td>
+                                                </ng-container>
+                                              
+                                                <ng-container matColumnDef="moneda">
+                                                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Moneda</th>
+                                                  <td mat-cell *matCellDef="let element">{{ element.moneda }}</td>
+                                                </ng-container>
+                                              
+                                                <ng-container matColumnDef="nombreColaborador">
+                                                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Colaborador</th>
+                                                  <td mat-cell *matCellDef="let element">{{ element.nombreColaborador }}</td>
+                                                </ng-container>
+                                              
+                                                <ng-container matColumnDef="numeroCuentaCci">
+                                                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Número Cuenta CCI</th>
+                                                  <td mat-cell *matCellDef="let element">{{ element.numeroCuentaCci }}</td>
+                                                </ng-container>
+                                              
+                                                <ng-container matColumnDef="estado">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+                                                    <td mat-cell *matCellDef="let element">
+                                                        <mat-chip [ngClass]="getEstadoClass(element.estado)">
+                                                        {{ element.estado }}
+                                                        </mat-chip>
+                                                    </td>
+                                                </ng-container>
+                                                
+                                                <ng-container matColumnDef="observacion">
+                                                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Observación</th>
+                                                  <td mat-cell *matCellDef="let element">{{ element.observacion }}</td>
+                                                </ng-container>
+                                              
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                                            </table>
+                                        </div>
+                                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" aria-label="Seleccionar página">
+                                        </mat-paginator>
+                                    </mat-card-content>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </foh-col>
+                </foh-grid>
+            </form>
+        </mat-step>
+        <mat-step [editable]="false">
+            <ng-template matStepLabel>Resultado y Resumen</ng-template>
+            <foh-grid class="gap-[18px] mt-[36px]">
+                <foh-col [xs]="12">
+                    <mat-card appearance="outlined" outlined-outline-color="white"
+                        class="p-[36px] bg-white flex flex-col gap-[16px]">
+                        <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+                            Resultado creación del lote de pago
+                        </h2>
+                        <div class="flex items-center gap-[12px]">
+                            <svg width="30" height="30" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                                <use [attr.href]="'/icons/sprites.svg#payment'" />
+                            </svg>
+                            <p class="text-[#6B7280] text-[16px] font-[400] leading-[var(--line-height-tight)]">
+                                La creación del lote de pago ha sido procesado. Se envió un resumen a tu correo electrónico.
+                            </p>
+                        </div>
+                    </mat-card>
+                </foh-col>
+
+                <foh-col [xs]="12">
+                    <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+                        <foh-grid>
+                            <foh-col [xs]="12">
+                                <button matButton>
+                                    <span class="flex gap-[6px]">
+                                        <span class="leading-[var(--line-height-tight)]">Descargar lote de pago</span>
+                                        <svg width="18" height="18" fill="none" stroke="currentColor"
+                                            class="text-[#1A73E8]">
+                                            <use [attr.href]="'/icons/sprites.svg#download'" />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </foh-col>
+                        </foh-grid>
+                    </mat-card>
+                </foh-col>
+
+                <foh-col [xs]="12">
+                    <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+                        <foh-grid class="gap-3 w-full max-w-[748px]">
+                            <foh-col [xs]="12">
+                                <foh-grid class="gap-[24px]">
+                                    <foh-col [xs]="6" class="flex flex-col">
+                                        <div class="flex flex-col gap-[6px] p-[18px]">
+                                            <p
+                                                class="text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">
+                                                Id de lote:
+                                            </p>
+                                            <p
+                                                class="text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">
+                                                TRF-2024-524188
+                                            </p>
+                                        </div>
+
+                                        <div class="flex flex-col gap-[6px] p-[18px]">
+                                            <p
+                                                class="text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">
+                                                De:
+                                            </p>
+                                            <p
+                                                class="text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">
+                                                Tu Empresa SAC
+                                            </p>
+                                        </div>
+
+                                        <div class="flex flex-col gap-[6px] p-[18px]">
+                                            <p
+                                                class="text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">
+                                                Cuenta cargo:
+                                            </p>
+                                            <p
+                                                class="text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">
+                                                TRF-2024-524188
+                                            </p>
+                                        </div>
+
+                                        <div class="flex flex-col gap-[6px] p-[18px]">
+                                            <p
+                                                class="text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">
+                                                Estado:
+                                            </p>
+                                            <mat-chip
+                                                class="bg-[#FEF3C7] text-[#92400E] self-start">PENDIENTE</mat-chip>
+                                        </div>
+                                    </foh-col>
+
+                                    <!-- Right Column -->
+                                    <foh-col [xs]="6" class="flex flex-col">
+                                        <div class="flex flex-col gap-[6px] p-[18px]">
+                                            <p
+                                                class="text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">
+                                                Fecha y Hora:
+                                            </p>
+                                            <p
+                                                class="text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">
+                                                6/10/2025 - 09:28 a.m.
+                                            </p>
+                                        </div>
+                                        <div class="flex flex-col gap-[6px] p-[18px]">
+                                            <p
+                                                class="text-[16px] font-[400] text-[#6B7280] leading-[var(--line-height-tight)]">
+                                                Monto:
+                                            </p>
+                                            <p
+                                                class="text-[16px] font-[400] text-[#333333] leading-[var(--line-height-tight)]">
+                                                S/ 220.00
+                                            </p>
+                                        </div>
+                                    </foh-col>
+                                </foh-grid>
+                                <!-- Email Section -->
+                                <div class="flex flex-col gap-3 p-[18px]">
+                                    <div class="flex gap-3 items-center">
+                                        <mat-form-field appearance="outline" class="flex-1" subscriptSizing="dynamic">
+                                            <mat-label>Correo</mat-label>
+                                            <input matInput placeholder="usuario@empresa.com" />
+                                        </mat-form-field>
+                                        <button matButton="filled" class="!h-[56px] !min-h-[56px]">Enviar constancia</button>
+                                    </div>
+                                </div>
+                            </foh-col>
+                        </foh-grid>
+                    </mat-card>
+                </foh-col>
+            </foh-grid>
+        </mat-step>
+
+    </mat-stepper>
+</section>

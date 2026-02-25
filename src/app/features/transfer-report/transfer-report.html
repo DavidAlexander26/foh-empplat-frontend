@@ -1,0 +1,185 @@
+<section class="pt-[36px]">
+  <foh-back-button text="Volver al inicio" route="/inicio" />
+
+  <foh-grid class="gap-[18px] mt-[36px]">
+
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined" class="p-[36px] bg-white flex flex-col gap-[16px]">
+        <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-tight">
+          Reporte de Transferencias
+        </h2>
+        <p class="text-[#6B7280] text-[16px] font-[400]">
+          Historial y estado de las transferencias realizadas y recibidas
+        </p>
+      </mat-card>
+    </foh-col>
+
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined" class="p-[36px] bg-white">
+        <h3 class="text-[1.5rem] font-[500] text-[#333] mb-[24px]">Filtros de búsqueda</h3>
+
+        <div class="flex flex-wrap items-center justify-between gap-4">
+
+
+          <div class="flex flex-wrap items-center gap-4">
+
+            <mat-form-field appearance="outline" class="w-[200px] subscript-sizing-dynamic">
+              <mat-label>Estado</mat-label>
+              <mat-select [(ngModel)]="filtros.estado">
+                <mat-option value="">Todos</mat-option>
+                <mat-option value="Autorizado">Aprobadas</mat-option>
+                <mat-option value="exitoso">No Aprobadas</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-[250px] subscript-sizing-dynamic">
+              <mat-label>Fecha inicio</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker1"
+                [(ngModel)]="filtros.fechaInicio"
+                [max]="today"
+              >
+              <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-[250px] subscript-sizing-dynamic">
+              <mat-label>Fecha fin</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker2"
+                [(ngModel)]="filtros.fechaFin"
+                [min]="filtros.fechaInicio"
+                [max]="today"
+              >
+              <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <button mat-button color="primary" class="ml-auto mb-[22px] text-[16px]"
+                    (click)="limpiarFiltros()">
+              Limpiar filtros
+            </button>
+
+            <button mat-flat-button color="primary" class="mb-[22px] h-[52px] w-[180px] !text-[18px] !font-bold flex justify-center items-center !rounded-[4px]">
+              Buscar
+            </button>
+          </div>
+
+        </div>
+      </mat-card>
+    </foh-col>
+
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined" class="p-[36px] bg-white">
+
+        <div class="flex flex-wrap justify-between items-center mb-[32px]">
+
+          <h3 class="text-[1.8rem] font-[700] text-[#333] m-0">
+            Listado de Transferencias
+          </h3>
+
+          <div class="flex gap-[24px]">
+            <button type="button" mat-button>
+              <span class="flex gap-[6px] items-center">
+                  <span class="text-[#1A73E8] font-[500] text-[16px] leading-tight">
+                      Descargar a pdf
+                  </span>
+                  <svg width="18" height="18" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                      <use [attr.href]="'/icons/sprites.svg#download'" />
+                  </svg>
+              </span>
+            </button>
+
+            <button type="button" mat-button>
+              <span class="flex gap-[6px] items-center">
+                  <span class="text-[#1A73E8] font-[500] text-[16px] leading-tight">
+                      Descargar a excel
+                  </span>
+                  <svg width="18" height="18" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                      <use [attr.href]="'/icons/sprites.svg#download'" />
+                  </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mat-elevation-z8 mt-4 overflow-hidden rounded-lg">
+
+          <div class="overflow-auto max-h-[500px]">
+            <table mat-table [dataSource]="dataSource" matSort class="w-[2000px]">
+
+              <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                <td mat-cell *matCellDef="let row">
+                  <span class="badge" [ngClass]="getStatusClass(row.estado)">
+                    {{ row.estado }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="creacion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Creación </th>
+                <td mat-cell *matCellDef="let row"> {{row.creacion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="aprobadores">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Aprobadores </th>
+                <td mat-cell *matCellDef="let row">
+                  <div *ngFor="let aprobador of row.aprobadores">
+                    {{ aprobador }}
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nroSolicitud">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nro. Solicitud </th>
+                <td mat-cell *matCellDef="let row"> {{row.nroSolicitud}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+                <td mat-cell *matCellDef="let row"> {{row.descripcion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cuentaCargo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cta. Cargo </th>
+                <td mat-cell *matCellDef="let row"> {{row.cuentaCargo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cuentaDestino">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cta. Destino </th>
+                <td mat-cell *matCellDef="let row"> {{row.cuentaDestino}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="canal">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Canal </th>
+                <td mat-cell *matCellDef="let row"> {{row.canal}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="monto">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
+                <td mat-cell *matCellDef="let row" class="font-bold"> {{row.monto}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="comisiones">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Comisiones </th>
+                <td mat-cell *matCellDef="let row"> {{row.comisiones}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="!bg-white z-10"></tr>
+
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="border-t"></mat-paginator>
+
+        </div>
+      </mat-card>
+    </foh-col>
+  </foh-grid>
+</section>

@@ -1,0 +1,204 @@
+<section class="filter-section">
+    <foh-back-button text="Volver al inicio" route="/inicio" />
+    <foh-grid class="gap-[18px] report-body">
+        <foh-col [xs]="12">
+            <mat-card appearance="outlined" outlined-outline-color="white"
+                class="p-[36px] bg-white flex flex-col gap-[16px]">
+                <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+                    Reporte apertura de cuentas
+                </h2>
+                <div class="flex items-center">
+                    <p class="text-[#6B7280] text-[16px] font-[400] leading-[var(--line-height-tight)]">
+                        Consulta lotes y aperturas individuales de cuentas
+                    </p>
+                </div>
+            </mat-card>
+        </foh-col>
+        <div class="flex filter-options items-center">
+          <button
+            mat-button
+            class="report-button whitespace-nowrap gap-[6px]"
+            [ngClass]="{'active-tab': selectedView() === 'batches'}"
+            (click)="setView('batches')"
+          >
+            <span class="flex items-center justify-center gap-[6px]">
+              <svg width="24" height="24" text="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 13H16V11H8V13ZM8 16H16V14H8V16ZM8 19H13V17H8V19ZM6 22C5.45 22 4.97917 21.8042 4.5875 21.4125C4.19583 21.0208 4 20.55 4 20V4C4 3.45 4.19583 2.97917 4.5875 2.5875C4.97917 2.19583 5.45 2 6 2H14L20 8V20C20 20.55 19.8042 21.0208 19.4125 21.4125C19.0208 21.8042 18.55 22 18 22H6ZM13 9V4H6V20H18V9H13Z" fill="currentColor"/>
+              </svg>
+              <span>Consulta por lotes</span>
+            </span>
+          </button>
+          <button
+            mat-button
+            class="report-button whitespace-nowrap"
+            [ngClass]="{'active-tab': selectedView() === 'accounts'}"
+            (click)="setView('accounts')"
+          >
+            <mat-icon class="!text-[24px] !w-[24px] !h-[24px]">perm_identity</mat-icon>
+            Consulta de aperturas
+          </button>
+        </div>
+        @if(selectedView() === 'batches'){
+        <foh-col [xs]="12">
+          <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+              <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+                Filtros de búsqueda
+              </h2>
+              <mat-card-actions class="flex items-end filter-box w-full" [style.padding]="0">
+
+
+                <div class="flex filter-item items-end gap-[24px]">
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fecha inicio</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="pickerInicioBatch"
+                      [(ngModel)]="batchFilters.fechaInicio"
+                      [max]="today"
+                      required
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="pickerInicioBatch"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInicioBatch></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fecha fin</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="pickerFinBatch"
+                      [(ngModel)]="batchFilters.fechaFin"
+                      [min]="batchFilters.fechaInicio"
+                      [max]="today"
+                      required
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="pickerFinBatch"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFinBatch></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+
+                <div class="flex filter-item gap-[30px]">
+                  <button
+                    type="button"
+                    mat-button
+                    matButton="text"
+                    (click)="clearBatchFilters()"
+                    class="filterBtns"
+                  >
+                    Limpiar filtros
+                  </button>
+
+                  <button
+                    mat-flat-button
+                    matButton="filled"
+                    (click)="buscarLotes()"
+                    class="filterBtns"
+                  >
+                    Buscar
+                  </button>
+                </div>
+
+              </mat-card-actions>
+
+
+          </mat-card>
+        </foh-col>
+        <foh-col [xs]="12">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>Listado de lotes de apertura</mat-card-title>
+                </mat-card-header>
+                <mat-card-content [style.padding]="0">
+                    <app-report-batch></app-report-batch>
+                </mat-card-content>
+            </mat-card>
+        </foh-col>
+        }
+        @if(selectedView() === 'accounts'){
+        <foh-col [xs]="12">
+          <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+              <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+                Filtros de búsqueda
+              </h2>
+              <mat-card-actions class="flex filter-box" [style.padding]="0">
+                <div class="flex filter-item items-end gap-[24px]">
+                  <div class="flex filter-item items-end gap-[24px]">
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Fecha inicio</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="pickerInicioBatch"
+                        [(ngModel)]="batchFilters.fechaInicio"
+                        [max]="today"
+                        required
+                      />
+                      <mat-datepicker-toggle matSuffix [for]="pickerInicioBatch"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerInicioBatch></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                      <mat-label>Fecha fin</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="pickerFinBatch"
+                        [(ngModel)]="batchFilters.fechaFin"
+                        [min]="batchFilters.fechaInicio"
+                        [max]="today"
+                        required
+                      />
+                      <mat-datepicker-toggle matSuffix [for]="pickerFinBatch"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerFinBatch></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+
+                  <mat-form-field appearance="outline" class="filter-dni">
+                    <mat-label class="filter-label">DNI</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      [(ngModel)]="accountFilters.dniFilter"
+                      placeholder="Ingrese DNI"
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="flex filter-item gap-[30px]">
+                  <button
+                    type="button"
+                    mat-button
+                    matButton="text"
+                    (click)="clearBatchFilters()"
+                    class="filterBtns"
+                  >
+                    Limpiar filtros
+                  </button>
+
+                  <button
+                    mat-flat-button
+                    matButton="filled"
+                    (click)="buscarLotes()"
+                    class="filterBtns"
+                  >
+                    Buscar
+                  </button>
+                </div>
+
+
+              </mat-card-actions>
+
+          </mat-card>
+        </foh-col>
+        <foh-col [xs]="12">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>Listado de cuentas</mat-card-title>
+                </mat-card-header>
+                <mat-card-content [style.padding]="0">
+                    <app-report-account></app-report-account>
+                </mat-card-content>
+            </mat-card>
+        </foh-col>
+        }
+    </foh-grid>
+</section>

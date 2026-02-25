@@ -1,0 +1,16 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      tertiary: mat.$blue-palette,
+    ),
+    typography: 'Poppins',
+    density: 0,
+  ));
+
+  @include mat.theme-overrides((
+    primary: var(--primary-light-blue),
+    secondary: var(--primary-dark)
+  ));
+}

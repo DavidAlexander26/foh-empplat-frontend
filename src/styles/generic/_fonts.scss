@@ -1,0 +1,60 @@
+// ============================================
+// Font Definitions
+// ============================================
+// Este archivo contiene todas las definiciones de fuentes del proyecto
+
+// Poppins Italic
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+// Poppins Light
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+// Poppins Light Italic
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+// Poppins Medium
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+// Poppins Medium Italic
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+// Poppins Regular
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+// Poppins SemiBold
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}

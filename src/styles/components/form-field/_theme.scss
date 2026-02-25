@@ -1,0 +1,14 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.form-field-overrides((
+    outlined-focus-outline-color: var(--primary-blue),
+    outlined-focus-label-text-color: var(--primary-blue),
+    outlined-outline-color: var(--border-default),
+    outlined-hover-outline-color: var(--hover-border),
+    outlined-label-text-size: var(--font-size-md),
+    outlined-label-text-populated-size: var(--font-size-md),
+    subscript-text-size: var(--font-size-sm),
+    container-text-size: var(--font-size-md),
+  ));
+}

@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+.reports-menu {
+  margin-left: 144px;
+  margin-top: -282px;
+  min-width: fit-content !important;
+  min-width: --webkit-fill-available !important;
+  overflow: unset !important;
+  @include mat.menu-overrides(
+    (
+      container-color: var(--primary-light-blue),
+      item-label-text-color: white,
+      item-label-text-weight: var(--font-weight-medium),
+      container-shape: var(--radius-lg),
+      divider-bottom-spacing: var(--spacing-xs),
+      divider-top-spacing: var(--spacing-xs),
+      item-leading-spacing: var(--spacing-2xl),
+      item-trailing-spacing: var(--spacing-2xl),
+      item-label-text-line-height: var(--line-height-normal),
+    )
+  );
+}
+
+:root{
+  --mat-menu-item-label-text-size : 1.5rem;
+}

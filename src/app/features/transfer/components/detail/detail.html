@@ -1,0 +1,119 @@
+<!-- transfer-detail.component.html -->
+@if (isLoading()) {
+<div class="spinner-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="leading-[var(--line-height-tight)] font-[400] text-[16px]">Obteniendo informacion...</p>
+</div>
+}
+@else {
+<div class="dialog-header">
+    <button mat-icon-button mat-dialog-close class="close-button order-1">
+        <mat-icon>close</mat-icon>
+    </button>
+    <div class="header-content flex-1">
+        <h2 class="text-[2rem] font-[500] leading-[var(--line-height-tight)] text-[#333] ">Detalle de la
+            transferencia
+        </h2>
+    </div>
+</div>
+
+<mat-dialog-content [style.padding]="'24px 36px 36px'">
+    <div class="detail-grid">
+        <div class="detail-row">
+            <span class="label">Fecha de creación:</span>
+            <span class="value">{{ detailData()?.createdAt! | dateFormat }}</span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-row">
+            <span class="label">Número de solicitud:</span>
+            <span class="value">{{ detailData()?.transferNumber }}</span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-row">
+            <span class="label">Descripción:</span>
+            <span class="value">{{ detailData()?.description }}</span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-row">
+            <span class="label">Cuenta de cargo:</span>
+            <span class="value">{{ detailData()?.sourceAccount?.accountNumber }}</span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-row">
+            <span class="label">Cuenta de destino:</span>
+            <span class="value">{{ detailData()?.destinationAccount?.accountNumber}}</span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-row">
+            <span class="label">Monto:</span>
+            <span class="value">{{ detailData()?.amount! | currency : detailData()?.currency! }}</span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-row">
+            <span class="label">Moneda:</span>
+            <span class="value">{{ detailData()?.currency === 'USD' ? 'Dólares' : 'Soles' }}</span>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="detail-row">
+            <span class="label">Estado:</span>
+            <mat-chip-set>
+                <mat-chip class="status-chip" [ngClass]="`status-transfer-${detailData()?.status?.toLowerCase()}`">{{
+                    detailData()?.status }}</mat-chip>
+            </mat-chip-set>
+        </div>
+    </div>
+
+    <div class="approvers-section">
+        <h3 class="text-[2rem] font-[500] leading-[var(--line-height-tight)] text-[#333] mb-[36px]">Lista de aprobadores
+        </h3>
+
+        @if (approvalsResource.isLoading()) {
+        <div class="spinner-container">
+            <mat-spinner diameter="50"></mat-spinner>
+            <p class="leading-[var(--line-height-tight)] font-[400] text-[16px]">Cargando aprobadores...</p>
+        </div>
+        }
+        @else if (approvalsResource.error()) {
+        <p class="leading-[var(--line-height-tight)] font-[400] text-[16px]">Error al cargar aprobadores</p>
+        }
+        @else if(!approvalsResource.hasValue()
+        || approvalsResource.value()?.data?.length === 0 || !approvalsResource.value()?.success) {
+        <p class="leading-[var(--line-height-tight)] font-[400] text-[16px]">Transferencia sin aprobadores</p>
+        }
+        @else {
+        <table mat-table [dataSource]="approvalsResource.value()!.data" class="approvers-table">
+
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let element">{{ element.approvalName }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef>Accion</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-chip class="bg-[#FEF3C7] text-[#92400E] self-start"
+                        [ngClass]="`status-transfer-${element.action?.toLowerCase()}`">{{element.action}}</mat-chip>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        }
+    </div>
+</mat-dialog-content>
+}

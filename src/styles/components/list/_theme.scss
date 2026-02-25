@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.list-overrides((
+    list-item-label-text-size: var(--font-size-md),
+    list-item-label-text-color: var(--primary-dark-label),
+    list-item-hover-label-text-color: var(--primary-dark-label),
+    list-item-supporting-text-color: var(--primary-dark),
+    list-item-supporting-text-size: var(--font-size-md),
+  ));
+}

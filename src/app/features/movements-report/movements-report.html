@@ -1,0 +1,151 @@
+<section class="pt-[36px]">
+  <foh-back-button text="Volver al inicio" route="/inicio" />
+
+  <foh-grid class="gap-[18px] mt-[36px]">
+
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined" class="p-[36px] bg-white flex flex-col gap-[16px]">
+        <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-tight">
+          Reporte de Movimientos
+        </h2>
+        <p class="text-[#6B7280] text-[16px] font-[400]">
+          Movimientos de cuenta para análisis y auditoría
+        </p>
+      </mat-card>
+    </foh-col>
+
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined" class="p-[36px] bg-white">
+        <h3 class="text-[1.5rem] font-[500] text-[#333] mb-[24px]">Filtros de búsqueda</h3>
+
+        <div class="flex items-end gap-[24px] flex-wrap">
+          <mat-form-field appearance="outline" class="w-[250px]">
+            <mat-label>Fecha inicio</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker1"
+              [(ngModel)]="filtros.fechaInicio"
+              [max]="today"
+            >
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-[250px]">
+            <mat-label>Fecha fin</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker2"
+              [(ngModel)]="filtros.fechaFin"
+              [min]="filtros.fechaInicio"
+              [max]="today"
+            >
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+
+          <button type="button" mat-button color="primary" class="ml-auto mb-[22px] text-[16px]"
+                  (click)="limpiarFiltros()">
+            Limpiar filtros
+          </button>
+
+          <button mat-flat-button color="primary" class="mb-[22px] h-[52px] w-[180px] !text-[18px] !font-bold flex justify-center items-center !rounded-[4px]">
+            Buscar
+          </button>
+        </div>
+      </mat-card>
+    </foh-col>
+
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined" class="p-[36px] bg-white">
+
+        <div class="flex flex-wrap justify-between items-center mb-[32px]">
+
+          <h3 class="text-[1.8rem] font-[700] text-[#333] m-0">
+            Líneas de Movimientos
+          </h3>
+
+          <div class="flex gap-[24px]">
+            <button type="button" mat-button>
+          <span class="flex gap-[6px] items-center">
+            <span class="text-[#1A73E8] font-[500] text-[16px] leading-tight">
+              Descargar a pdf
+            </span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+              <use [attr.href]="'/icons/sprites.svg#download'" />
+            </svg>
+          </span>
+            </button>
+
+            <button type="button" mat-button>
+          <span class="flex gap-[6px] items-center">
+            <span class="text-[#1A73E8] font-[500] text-[16px] leading-tight">
+              Descargar a excel
+            </span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+              <use [attr.href]="'/icons/sprites.svg#download'" />
+            </svg>
+          </span>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="overflow-auto">
+          <table mat-table [dataSource]="dataSource" matSort class="w-[1320px]">
+
+            <ng-container matColumnDef="fechaOperacion">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-[14px] font-bold"> Fecha Operación </th>
+              <td mat-cell *matCellDef="let element" class="text-[14px]"> {{element.fechaOperacion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaProceso">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-[14px] font-bold"> Fecha Proceso </th>
+              <td mat-cell *matCellDef="let element" class="text-[14px]"> {{element.fechaProceso}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nroOperacion">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-[14px] font-bold"> Nro. Operación </th>
+              <td mat-cell *matCellDef="let element" class="text-[14px]"> {{element.nroOperacion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nombreTransaccion">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-[14px] font-bold"> Transacción </th>
+              <td mat-cell *matCellDef="let element" class="text-[14px]"> {{element.nombreTransaccion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="descripcion">
+              <th mat-header-cell *matHeaderCellDef class="text-[14px] font-bold"> Descripción </th>
+              <td mat-cell *matCellDef="let element" class="text-[14px] max-w-[200px] truncate"> {{element.descripcion}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="canal">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-[14px] font-bold"> Canal </th>
+              <td mat-cell *matCellDef="let element" class="text-[14px]"> {{element.canal}} </td>
+            </ng-container>
+
+
+
+            <ng-container matColumnDef="importe">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-[14px] font-bold"> Importe </th>
+
+              <td mat-cell *matCellDef="let element"
+                  class="text-[14px] font-bold"
+                  [class.text-green-600]="!element.importe.toString().includes('-')"
+                  [class.text-red-600]="element.importe.toString().includes('-')">
+
+                {{ element.importe }}
+              </td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [length]="totalRecords()" [pageSize]="pageSize()" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+        </div>
+      </mat-card>
+    </foh-col>
+  </foh-grid>
+</section>

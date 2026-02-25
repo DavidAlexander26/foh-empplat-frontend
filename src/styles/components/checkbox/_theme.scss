@@ -1,0 +1,10 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.checkbox-overrides((
+    selected-icon-color: var(--primary-blue),
+    selected-hover-icon-color: var(--primary-blue),
+    selected-focus-icon-color: var(--primary-blue),
+    label-text-size: var(--font-size-md),
+  ));
+}

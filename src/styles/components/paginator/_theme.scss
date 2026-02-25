@@ -1,0 +1,8 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.paginator-overrides((
+    container-text-size:1.25rem,
+    select-trigger-text-size:1.25rem,
+  ));
+}

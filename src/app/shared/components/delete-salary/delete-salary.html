@@ -1,0 +1,10 @@
+<div class="p-[36px] pt-[24px] flex flex-col gap-[36px]">
+    <div class="flex flex-col gap-[12px]">
+      <h2  class="text-[#333333] font-[700] leading-[var(--line-height-tight)] text-[2rem]">Eliminando lote</h2>
+      <p class="font-[300] text-[#757575] leading-[var(--line-height-tight)] text-[1.6rem]">¿Está seguro(a) que desea eliminar este lote?</p>
+    </div>
+    <div class="flex justify-end gap-[12px]">
+      <button matButton="outlined" mat-dialog-close [disabled]="isLoading()">No, cancelar</button>
+      <button matButton="filled" cdkFocusInitial (click)="deleteSalary()" [disabled]="isLoading()">{{! isLoading() ? 'Sí, continuar' : 'Eliminado ...'}}</button>
+    </div>
+  </div>

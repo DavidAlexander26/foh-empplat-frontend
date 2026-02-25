@@ -1,0 +1,57 @@
+<div class="dialog-header">
+  <button mat-icon-button mat-dialog-close class="close-button" [disabled]="isSubmitting()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="header-content">
+    <svg width="30" height="30" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+      <use [attr.href]="'/icons/sprites.svg#shield'" />
+    </svg>
+    <h2 class="text-[24px]">Validación de seguridad</h2>
+  </div>
+</div>
+
+<mat-dialog-content [style.overflow-y]="'hidden'">
+  <form [formGroup]="securityForm" class="flex flex-col gap-6">
+    <input type="text" name="username" autocomplete="username" style="display:none" aria-hidden="true">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Clave de seguridad</mat-label>
+      <mat-icon matPrefix>lock</mat-icon>
+      <input [type]="hidePassword() ? 'password' : 'text'" matInput placeholder="**********"
+        formControlName="securityKey" [readonly]="isSubmitting()" autocomplete="current-password"
+        (focus)="securityKeyTouched.set(true)">
+      <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+        <mat-icon>{{hidePassword() ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </button>
+      @if (securityKeyTouched() && securityForm.controls.securityKey.invalid) {
+      <mat-error>Este campo es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Token digital</mat-label>
+      <mat-icon matPrefix>lock</mat-icon>
+      <input [type]="hideToken() ? 'password' : 'text'" matInput placeholder="******" formControlName="digitalToken"
+        [readonly]="isSubmitting()" autocomplete="one-time-code" (focus)="digitalTokenTouched.set(true)">
+      <button mat-icon-button matSuffix (click)="toggleTokenVisibility()">
+        <mat-icon>{{hideToken() ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </button>
+      @if (digitalTokenTouched() && securityForm.controls.digitalToken.invalid) {
+      <mat-error>Este campo es requerido</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <div class="pt-6">
+    <button mat-stroked-button matbutton="outlined" mat-dialog-close class="cancel-button"
+      [disabled]="isSubmitting()">Cancelar</button>
+    <button mat-flat-button matbutton="filled" (click)="onConfirm()" [disabled]="securityForm.invalid || isSubmitting()"
+      class="confirm-button">
+      @if (isSubmitting()) {
+      <mat-spinner diameter="20"></mat-spinner>
+      }
+      {{ isSubmitting() ? 'Confirmando...' : 'Confirmar' }}
+    </button>
+  </div>
+</mat-dialog-actions>

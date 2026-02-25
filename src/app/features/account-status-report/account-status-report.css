@@ -1,0 +1,33 @@
+/* --- INICIO CSS AGRESIVO --- */
+
+/* 1. Colapsar el contenedor principal (la tarjeta flotante) */
+.example-month-picker.mat-datepicker-content {
+  height: auto !important;
+  min-height: unset !important;
+  aspect-ratio: unset !important; /* Por si Angular intenta mantener proporción */
+}
+
+/* 2. Colapsar el calendario interno */
+.example-month-picker .mat-calendar {
+  height: auto !important;
+  min-height: unset !important;
+}
+
+/* 3. Ajustar el contenedor de la vista de meses para quitar espacios */
+.example-month-picker .mat-calendar-view {
+  margin-bottom: 0 !important;
+}
+
+/* 4. Quitar paddings extraños que pueda traer por defecto */
+.example-month-picker .mat-calendar-content {
+  padding-bottom: 0 !important;
+}
+
+/* --- ESTILOS DE NAVEGACIÓN (Estos ya funcionaban, déjalos) --- */
+.example-month-picker .mat-calendar-period-button {
+  pointer-events: none;
+}
+
+.example-month-picker .mat-calendar-arrow {
+  display: none;
+}

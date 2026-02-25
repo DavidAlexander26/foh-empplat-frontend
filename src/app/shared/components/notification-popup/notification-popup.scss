@@ -1,0 +1,125 @@
+.notification-popup {
+  width: 672px;
+  max-width: 90vw;
+  background: white;
+  border-radius: 8px;
+  padding: 36px 18px 0;
+}
+
+.popup-header {
+  margin-bottom: 24px;
+  h2 {
+    line-height: var(--line-height-normal);
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+  }
+}
+
+.tab-label {
+  font-size: 14px;
+}
+
+.notifications-list {
+  padding: 12px;
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.notification-card {
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.notification-type-btn {
+  margin-bottom: 10px;
+  text-transform: none;
+  font-size: 13px;
+}
+
+.notification-date {
+  color: #666;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.notification-title {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #333;
+}
+
+.notification-financiera {
+  line-height: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+.notification-details {
+  p {
+    margin: 3px 0;
+    font-size: 13px;
+    color: #555;
+  }
+}
+
+.empty-message {
+  text-align: center;
+  color: #999;
+  padding: 40px 20px;
+  font-size: 14px;
+}
+
+.card_content {
+  p {
+    span {
+      color: #555;
+    }
+  }
+}
+
+// Ajustes para pantallas medianas (Escritorio)
+@media (max-width: 1366px) {
+  .notification-popup {
+    max-width: 45vw;
+  }
+
+  .notifications-list {
+    max-height: 390px;
+  }
+
+  .notification-popup {
+    padding: 30px 15px 0px;
+  }
+}
+
+// Ajustes para pantallas pequeñas (Escritorio y tableta)
+@media (max-width: 1024px) {
+  .notifications-list {
+    max-height: 40vh;
+  }
+
+  .notification-popup {
+    padding: 16px 12px 0px; 
+  }
+}
+// Ajustes para moviles
+@media (max-width: 768px) {
+  .notification-popup {
+    max-width: 85vw;
+    padding: 12px 8px 0;
+  }
+
+  .popup-header{
+    margin-bottom: 0px;
+  }
+
+  .tab-label {
+    font-size: 12px;
+  }
+}

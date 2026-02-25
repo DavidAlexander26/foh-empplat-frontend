@@ -1,0 +1,84 @@
+:host {
+  // Ocultar el icono de ojo del navegador en inputs de contraseña
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  input[type="password"]::-webkit-credentials-auto-fill-button,
+  input[type="password"]::-webkit-strong-password-auto-fill-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    right: 0 !important;
+  }
+
+  // Ocultar el botón de mostrar/ocultar password en Edge
+  input[type="password"]::-ms-reveal {
+    opacity: 0;
+    -ms-filter: "alpha(opacity=0)";
+    filter: alpha(opacity=0);
+  }
+
+  .form-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    position: relative;
+    height: 100%;
+
+    mat-card {
+      width: 100%;
+      max-width: 44rem;
+      border-radius: var(--radius-xl);
+      background-color: white;
+      padding: var(--spacing-3xl);
+
+      mat-card-header {
+        padding: 0;
+
+        mat-card-title {
+          text-align: center;
+          font-size: var(--font-size-3xl);
+          font-weight: var(--font-weight-semibold);
+          line-height: var(--line-height-relaxed);
+          color: var(--primary-dark);
+          height: fit-content;
+        }
+
+        mat-card-subtitle {
+          text-align: center;
+          font-size: var(--font-size-md);
+          font-weight: var(--font-weight-normal);
+          color: #757575;
+          margin: var(--spacing-sm) 0 0 0;
+          line-height: var(--line-height-normal);
+          padding-bottom: var(--spacing-xl);
+        }
+      }
+
+      mat-card-content {
+        padding: var(--spacing-3xl) 0;
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: var(--spacing-xl);
+        }
+      }
+
+      mat-card-actions {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+        padding: var(--spacing-3xl) 0 0 0;
+      }
+    }
+  }
+}

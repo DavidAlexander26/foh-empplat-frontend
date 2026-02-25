@@ -1,0 +1,135 @@
+<section class="pt-[36px]">
+  <foh-back-button text="Volver al inicio" route="/inicio" />
+  <foh-grid class="gap-[18px] mt-[36px]">
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white flex flex-col gap-[16px]">
+        <h2 class="text-[2.4rem] font-[500] text-[#333333] leading-[var(--line-height-tight)]">
+          Listado de transferencias
+        </h2>
+        <div class="flex items-center">
+          <p class="text-[#6B7280] text-[16px] font-[400] leading-[var(--line-height-tight)]">
+            Gestiona tus transferencias y operaciones financieras
+          </p>
+        </div>
+      </mat-card>
+    </foh-col>
+
+    <foh-col [xs]="12">
+
+      <mat-card appearance="outlined" outlined-outline-color="white" class="p-[36px] bg-white">
+
+        <mat-card-actions class="gap-[24px]" [style.padding]="0">
+          <button mat-flat-button matButton="filled" routerLink="/transferencias/nuevo">
+            Nueva transferencia
+          </button>
+
+          <button type="button" mat-button matButton="text" (click)="showFrequencyOperations()">
+            Operaciones frecuentes
+            <mat-icon>open_in_new</mat-icon>
+          </button>
+        </mat-card-actions>
+
+      </mat-card>
+    </foh-col>
+
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined">
+        <mat-card-header>
+
+          <mat-card-title>Registros</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content [style.padding]="0">
+          <div class="table-container">
+            @if(transferHistoryResource.isLoading()){
+            <div class="loading-shade">
+              <mat-spinner></mat-spinner>
+            </div>
+            }
+            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+              class="w-[1400px]">
+              <ng-container matColumnDef="fechaCreacion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de creación</th>
+                <td mat-cell *matCellDef="let transfer">
+                  <section>
+                    <span>{{ transfer.createdDate | dateFormat }}</span>
+                  </section>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nSolicitud">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nro. solicitud</th>
+                <td mat-cell *matCellDef="let transfer">
+                  <section>
+                    <span>{{ transfer.transferNumber }}</span>
+                  </section>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+                <td mat-cell *matCellDef="let transfer">
+                  <span>{{ transfer.description }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cuentaCargo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Cargo de cuenta</th>
+                <td mat-cell *matCellDef="let transfer">
+                  <span>{{ transfer.sourceAccount.accountNumber }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="cuentaDestino">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Cuenta destino</th>
+                <td mat-cell *matCellDef="let transfer">
+                  <span>{{ transfer.destinationAccount.accountNumber }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="monto">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Monto</th>
+                <td mat-cell *matCellDef="let transfer">
+                  <span>{{ transfer.amount! | currency : transfer.currency! }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="moneda">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Moneda</th>
+                <td mat-cell *matCellDef="let transfer">
+                  <span>{{ transfer.currency === 'USD' ? 'Dólares' : 'Soles' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+                <td mat-cell *matCellDef="let transfer">
+                  <mat-chip class="bg-[#FEF3C7] text-[#92400E] self-start"
+                    [ngClass]="`status-transfer-${transfer.status.toLowerCase()}`">{{transfer.status}}</mat-chip>
+                </td>
+              </ng-container>
+
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row (click)="showDetails(row)" *matRowDef="let row; columns: displayedColumns"></tr>
+
+
+
+            </table>
+            @if(transferHistoryResource.error()) {
+            <p class="text-[16px] leading-[var(--line-height-tight)] p-[1rem]">Error al obtener los registros</p>
+            }
+            @if (transferHistoryResource.hasValue() && transferHistoryResource.value().data.length <= 0) { <p
+              class="text-[16px] leading-[var(--line-height-tight)] p-[1rem]">No hay transferencias que mostrar</p>
+              }
+              <mat-paginator [length]="totalRecords()" [pageSize]="size()" [pageIndex]="page()"
+                [disabled]="transferHistoryResource.error()" [pageSizeOptions]="pageSizeOptions"
+                (page)="onPageChange($event)" aria-label="Seleccionar página">
+              </mat-paginator>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </foh-col>
+  </foh-grid>
+
+</section>

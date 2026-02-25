@@ -1,0 +1,64 @@
+<mat-toolbar color="primary">
+  <foh-grid [gap]="0">
+    <!-- Usuario y saludo -->
+    <foh-col [xs]="6" [md]="8" [lg]="6" class="header-user-info">
+      <section>
+        <mat-card appearance="outlined">
+          <mat-card-content [style.padding]="'0'">
+            <span class="user-info-name">Hola, {{ userFullName() }}</span>
+            <mat-form-field appearance="outline" class="company-field" subscriptSizing="dynamic">
+              <mat-label>Empresa</mat-label>
+              <mat-select [value]="selectedCompany()" (selectionChange)="onCompanyChange($event.value)"
+                class="company-select">
+                <mat-option *ngFor="let company of companies()" [value]="company">
+                  {{ company }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </section>
+    </foh-col>
+
+    <!-- Controles del lado derecho -->
+    <foh-col [xs]="6" [md]="4" [lg]="6" class="header-controls">
+      <section>
+        <!-- Notificaciones -->
+        <button class="notification-button" mat-icon-button type="button" (click)="onNotificationClick()"
+          [matBadge]="notificationCount" [matMenuTriggerFor]="notificationMenu"
+          [matBadgeHidden]="notificationCount === 0" matBadgeColor="warn" matBadgeSize="small" title="Notifications">
+          <svg width="30" height="30">
+            <use [attr.href]="'/icons/sprites.svg#bell'" />
+          </svg>
+        </button>
+
+        <!-- Avatar/Perfil -->
+        <button type="button" title="Account Profile" mat-icon-button [matMenuTriggerFor]="profileMenu"
+          class="profile-button" (click)="onProfileClick()">
+          <svg width="30" height="30">
+            <use [attr.href]="'/icons/sprites.svg#user'" />
+          </svg>
+        </button>
+        <!--  Hamburguesa (mobile) -->
+        <button class="hamburger-button" mat-icon-button type="button" (click)="toggleSidebar()" title="Menu">
+          <mat-icon>reorder</mat-icon>
+        </button>
+
+        <mat-menu #notificationMenu="matMenu" class="notification-menu-wrapper">
+          <div (click)="$event.stopPropagation()">
+            @if (isNotificationMenuOpen) {
+            <app-notification-popup />
+            }
+          </div>
+        </mat-menu>
+
+        <mat-menu #profileMenu="matMenu" class="profile-menu-wrapper">
+          <div (click)="$event.stopPropagation()">
+            <app-profile-popup (menuClosed)="profileMenu.closed.emit()" />
+          </div>
+        </mat-menu>
+      </section>
+    </foh-col>
+  </foh-grid>
+</mat-toolbar>
+<mat-divider></mat-divider>

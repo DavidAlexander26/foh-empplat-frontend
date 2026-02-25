@@ -1,0 +1,17 @@
+table {
+  table-layout: auto;
+  background-color: white;
+}
+
+
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+  } 
+  th{
+    font-size: 12px;
+  }
+  td{
+    font-size: 12px;
+  }
+}

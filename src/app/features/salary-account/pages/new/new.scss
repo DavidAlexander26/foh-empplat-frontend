@@ -1,0 +1,144 @@
+.dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 200px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  
+    &:hover {
+      border-color: #1A73E8 !important;
+    }
+  
+    &.dragover {
+      border-color: #1A73E8 !important;
+      background-color: #EFF6FF !important;
+    }
+  
+    .archivo-seleccionado {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 36px;
+      width: 100%;
+  
+      h3 {
+        font-size: 2rem;
+        font-weight: 500;
+        color: #333333;
+        margin: 0;
+      }
+  
+      .file-info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+  
+        .label {
+          font-size: 1.6rem;
+          color: #6B7280;
+          margin: 0;
+        }
+  
+        .value {
+          font-size: 1.6rem;
+          color: #374151;
+          margin: 0;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .new-salary{
+    padding-top: 36px;
+  }
+  
+  .item-label {
+    color: #6B7280;
+    font-size: 1.6rem;
+    @apply leading-[var(--line-height-tight)];
+  }
+  
+  .item-value {
+    font-size: 1.6rem;
+    color : #333333;
+    @apply leading-[var(--line-height-tight)];
+  }
+
+  .create-account-icon{
+    width: 30px;
+    height: 30px;
+  }
+
+  .new-options-div{
+    justify-content: space-between;
+  }
+
+  .new-options-icon{
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 768px){
+    .mdc-card {
+        padding: var(--spacing-md) !important;
+    }
+
+    .new-salary{
+      padding-top: 16px;
+    }
+
+    .create-account-icon{
+      width: 50px;
+      height: 25px;
+    }
+
+    .new-btn{
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .constancia-btn{
+      width: 50%;
+    }
+
+    .new-options-div{
+      flex-direction: column;
+      justify-content:center;
+      gap: 12px;
+    }
+
+    .new-options-icon{
+      width: 30px;
+      height: 20px;
+    }
+
+    .archivo-seleccionado {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+  
+      h3 {
+        font-size: 2rem;
+        line-height: 1.2;
+      }
+  
+      .file-info {
+        gap: 12px !important;
+      }
+
+      .download-span{
+        align-items: center;
+      }
+
+      .descargar-lote-span {
+        font-size: 16px;
+      }
+
+      
+    }
+  }

@@ -1,0 +1,72 @@
+mat-card-content {
+    padding: 0;
+}
+
+mat-card {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--spacing-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+mat-card-content {
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+
+}
+
+// Estilos generales para las cards
+mat-card {
+    mat-card-header {
+        padding: 0 !important;
+        display: flex;
+        gap: 1.2rem;
+
+        svg {
+            margin: 0.5rem 0;
+            width: 1.8rem;
+            height: 1.8rem;
+            border-radius: 0;
+        }
+
+        mat-card-title {
+            padding: 0;
+            font-size: var(--font-size-lg) !important;
+            font-weight: var(--font-weight-semibold) !important;
+            color: var(--primary-dark) !important;
+            margin: 0;
+        }
+    }
+}
+
+// Estilos para la sección de información del usuario
+
+mat-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+
+    mat-list-item:first-child {
+        display: flex;
+        width: fit-content;
+        width: 469px;
+
+        @media screen and (max-width: 720px) {
+            width: 230px;
+        }
+    }
+
+    mat-list-item {
+        display: flex;
+        width: 230px;
+        gap: var(--spacing-sm);
+
+        .list-item__label-name {
+            padding: 0 0 0.6rem 0;
+        }
+    }
+}

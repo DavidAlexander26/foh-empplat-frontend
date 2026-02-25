@@ -1,0 +1,43 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.table-overrides((
+    // Contenedor principal
+    background-color: transparent,
+    
+    // Header de la tabla
+    header-headline-color: var(--text-secondary),
+    header-headline-size: var(--font-size-base),
+    header-headline-weight: var(--font-weight-semibold),
+    header-container-height: 4.8rem,
+    row-item-label-text-size: var(--font-size-base),
+    header-headline-line-height: var(--line-height-tight),
+    
+    // Filas de datos
+    row-item-label-text-color: var(--primary-dark),
+    row-item-label-text-weight: var(--font-weight-normal),
+    row-item-container-height: 4.8rem,
+    
+    // Bordes
+    row-item-outline-width: 0.12rem,
+    row-item-outline-color: #333333,
+    
+    footer-supporting-text-size: var(--font-size-xs),
+    footer-supporting-text-weight: var(--font-weight-normal),
+    footer-supporting-text-line-height: var(--line-height-normal),
+    footer-container-height: 3.6rem,
+  ));
+}
+
+// Variables CSS personalizadas para elementos específicos de la tabla
+:root {
+  // Botones de acción en la tabla
+  --table-action-button-size: 3.6rem;
+  --table-action-button-icon-size: 1.8rem;
+  --table-action-button-color: var(--primary-blue);
+  --table-action-button-hover-bg: #e3f2fd;
+  
+  // Transiciones
+  --table-transition-duration: 0.2s;
+  --table-transition-timing: ease;
+}

@@ -1,0 +1,9 @@
+:host {
+  .signin-container {
+    min-height: 100vh;
+    background: var(--background-light);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+  }
+}

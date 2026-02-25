@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* Configuración de rem: 1rem = 10px */
+html {
+  font-size: 62.5%; /* 62.5% de 16px = 10px */
+}
+
+ *, ::before, ::after {
+    border-style: none;
+}
+
+.table-container {
+  position: relative;
+  min-height: 200px;
+  overflow: auto;
+}
+
+.loading-shade {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mat-mdc-menu-panel{
+  max-width: unset !important;
+}
+
+.mat-mdc-menu-content{
+  padding: unset !important;
+}
+
+@media (max-width: 768px) {
+  .cdk-overlay-pane:has(.notification-menu-wrapper) {
+    left: 30px;
+    width: 100%;
+  }
+  .reports-menu{
+    width: min(55vw, 360px) !important;
+  }
+}

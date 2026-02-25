@@ -1,0 +1,42 @@
+.profile-popup-content {
+    min-width: 320px;
+    background: white;
+    padding: 18px 0;
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 24px;
+    width: 100%;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    .menu-icon {
+        flex-shrink: 0;
+        transition: stroke 0.2s ease;
+    }
+
+    span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .menu-icon {
+        stroke: #333;
+    }
+
+    &:hover {
+        span {
+            color: #1A73E8;
+        }
+
+        .menu-icon {
+            stroke: #1A73E8;
+        }
+    }
+}
+
+mat-divider {
+    margin: 12px 0;
+}

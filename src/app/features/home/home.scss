@@ -1,0 +1,147 @@
+:host {
+  foh-grid {
+    padding: var(--spacing-3xl) 0;
+    gap: var(--spacing-xl);
+  }
+
+  .user-info-card{
+    width: fit-content;
+  }
+
+  mat-card-content {
+    padding: 0;
+  
+  }
+
+  mat-card {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--spacing-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  .accounts-sections {
+    width: 100%;
+    
+    mat-card {
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    mat-card-content {
+      width: 100%;
+      padding: 0;
+      overflow: hidden;
+      
+      .table-scroll-container {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        
+        table {
+          width: 100%;
+          min-width: 812px;
+          
+        }
+      }
+    }
+  }
+
+  // Estilos generales para las cards
+  mat-card {
+    mat-card-header {
+      padding: 0;
+      display: flex;
+      gap: 1.2rem;
+
+      svg {
+        margin: 0.5rem 0;
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: 0;
+      }
+      mat-card-title {
+        padding: 0;
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+        color: var(--primary-dark);
+        margin: 0;
+      }
+    }
+  }
+
+  // Estilos para la sección de información del usuario
+
+  mat-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+
+    mat-list-item:first-child {
+      display: flex;
+      width: fit-content;
+      width: 469px;
+
+      @media screen and (max-width: 720px) {
+        width: 230px;
+      }
+    }
+
+    mat-list-item {
+      display: flex;
+      width: 230px;
+      gap: var(--spacing-sm);
+
+      .list-item__label-name {
+        padding: 0 0 0.6rem 0;
+      }
+    }
+  }
+
+  // NUEVOS ESTILOS PARA EL GRID DE PERFIL
+  .profile-info-card {
+    .mat-mdc-card-content {
+      padding: var(--spacing-xl);
+    }
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2xl) var(--spacing-3xl);
+  }
+
+  .profile-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+
+    &.profile-item-full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .profile-label {
+    color: #9CA3AF;
+  }
+
+  .profile-value {
+    color: #333333;
+  }
+
+  // Responsivo para el grid de perfil
+  @media (max-width: 1024px) {
+    .profile-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .profile-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

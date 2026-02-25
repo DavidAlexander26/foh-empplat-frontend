@@ -1,0 +1,54 @@
+.history-section{
+    padding-top: 36px;
+}
+
+.history-grid{
+    gap: 18px;
+    margin-top: 36px;
+}
+
+table{
+    background-color: white;
+}
+
+.text-base{
+    font-size: 14px;
+}
+
+.download-btn{
+    gap: 6px;
+}
+
+.download-btn-icon{
+    width: 18px;
+    height: 18px;
+}
+
+@media(max-width: 768px){
+    .history-section{
+        padding-top: 10px;
+    }
+    
+    .history-grid{
+        margin-top: 10px;
+    }
+
+    .text-base{
+        font-size: 12px;
+    }
+
+    /*Componente general*/
+    .mdc-card {
+        padding: var(--spacing-md) !important;
+    }
+
+    .download-btn{
+        gap: 0px;
+    }
+
+    .download-btn-icon{
+        width: 30px;
+        height: 18px;
+    }
+}
+

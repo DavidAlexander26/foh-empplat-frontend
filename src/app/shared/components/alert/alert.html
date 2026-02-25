@@ -1,0 +1,7 @@
+    <div class="alert-content">
+      <mat-icon>{{ getIcon() }}</mat-icon>
+      <span class="text-[1.5rem] leading-[var(--line-height-tight)]">{{ data.message }}</span>
+      <button (click)="close()" >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>

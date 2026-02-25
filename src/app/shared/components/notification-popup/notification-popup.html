@@ -1,0 +1,251 @@
+<!--
+<div class="notification-popup">
+    <div class="popup-header">
+      <h2 >Bandeja de notificaciones</h2>
+    </div>
+  
+    <mat-tab-group animationDuration="0ms">
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label">Pendientes ({{ pendingCache().length }})</span>
+        </ng-template>
+        <div class="notifications-list">
+          @if (pendingCache().length > 0) {
+            @for (notification of pendingCache(); track notification.id) {
+              <mat-card class="notification-card bg-white"  appearance="outlined" outlined-outline-color="white" [style.padding]="'18px 18px 8px'">
+                <mat-card-content [style.padding]="0">
+                  <div class="flex gap-[12px] flex-col">
+                    <div class="card__header">
+                      <app-chip-notification>
+                        {{ notification.type }}
+                      </app-chip-notification>
+                    </div>
+                    
+                    <div class="card_content flex flex-col gap-[12px]">
+                      <p class="notification-date">{{ notification.date }}</p>
+                      
+                      <h3 class="notification-title">{{ notification.title }}</h3>
+                      
+                      <p class="notification-financiera">{{ notification.financiera }}</p>
+                      
+                      <p><span>Cuenta:</span> {{ notification.cuenta }}</p>
+                      <p><span>Dólares:</span> {{ notification.dolares | number:'1.2-2' }}</p>
+                      <p><span>Soles:</span> {{ notification.soles | number:'1.2-2' }}</p>
+                    </div>
+  
+                    <div class="card__actions flex justify-end items-center">
+                    <button type="button" mat-button matButton="text" >
+                        <span class="flex gap-[6px]">
+                            <span class="leading-[var(--line-height-tight)]">Aprobar</span>
+                            <svg width="18" height="18" fill="none" stroke="currentColor"
+                                class="text-[#1A73E8]">
+                                <use [attr.href]="'/icons/sprites.svg#accept'" />
+                            </svg>
+                        </span>
+                    </button>
+                    <button type="button" mat-button matButton="text">
+                      <span class="flex gap-[6px]">
+                          <span class="leading-[var(--line-height-tight)]">Rechazar</span>
+                          <svg width="18" height="18" fill="none" stroke="currentColor"
+                              class="text-[#1A73E8]">
+                              <use [attr.href]="'/icons/sprites.svg#reject'" />
+                          </svg>
+                      </span>
+                  </button>
+                    </div>
+
+                  </div>
+                  
+                </mat-card-content>
+              </mat-card>
+            }
+          } @else {
+            <p class="empty-message">
+              No hay notificaciones pendientes
+            </p>
+          }
+        </div>
+      </mat-tab>
+  
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label active">Aprobadas ({{ approvedNotifications().length }})</span>
+        </ng-template>
+        <div class="notifications-list">
+          @if (approvedNotifications().length > 0) {
+            @for (notification of approvedNotifications(); track notification.id) {
+              <mat-card class="notification-card bg-white"  appearance="outlined" outlined-outline-color="white" [style.padding]="'18px'">
+                <mat-card-content [style.padding]="0">
+                  <div class="flex gap-[12px] flex-col">
+                    <div class="card__header">
+                      <app-chip-notification>
+                        {{ notification.type }}
+                      </app-chip-notification>
+                    </div>
+                    
+                    <div class="card_content flex flex-col gap-[12px]">
+                      <p class="notification-date">{{ notification.date }}</p>
+                      
+                      <h3 class="notification-title">{{ notification.title }}</h3>
+                      
+                      <p class="notification-financiera">{{ notification.financiera }}</p>
+                      
+                      <p><span>Cuenta:</span> {{ notification.cuenta }}</p>
+                      <p><span>Dólares:</span> {{ notification.dolares | number:'1.2-2' }}</p>
+                      <p><span>Soles:</span> {{ notification.soles | number:'1.2-2' }}</p>
+                    </div>
+  
+                  </div>
+                  
+                </mat-card-content>
+              </mat-card>
+            }
+          } @else {
+            <p class="empty-message">
+              No hay notificaciones aprobadas
+            </p>
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  -->
+<div class="notification-popup">
+  <div class="popup-header">
+    <h2>Bandeja de notificaciones</h2>
+  </div>
+
+
+  <mat-tab-group animationDuration="0ms" (selectedTabChange)="onTabChange($event.index)">
+
+    <!-- Tab Pendientes -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="tab-label">
+          Pendientes ({{ pendingOperationsResource.isLoading()? '...' :
+          pendingCache().length }})
+        </span>
+      </ng-template>
+
+      <div class="notifications-list">
+        <!-- Loader -->
+        @if (pendingOperationsResource.isLoading()) {
+        <div class="flex justify-center items-center p-8">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        }
+
+        <!-- Error -->
+        @else if (pendingOperationsResource.error()) {
+        <p class="error-message text-center p-4 text-red-600">
+          Error al cargar notificaciones: {{ pendingOperationsResource.error()?.message }}
+        </p>
+        }
+
+        @else if (pendingCache() !=null && pendingCache()!.length > 0) {
+        @for (notification of pendingCache(); track notification.operationId) {
+        <mat-card class="notification-card bg-white" appearance="outlined" [style.padding]="'18px 18px 8px'">
+          <mat-card-content [style.padding]="0">
+            <div class="flex gap-[12px] flex-col">
+              <div class="card__header">
+                <app-chip-notification>
+                  {{ notification.operationType | operationTypePipe }}
+                </app-chip-notification>
+              </div>
+
+              <div class="card_content flex flex-col gap-[12px]">
+                <p class="notification-date">{{ notification.operationDate | dateFormat }}</p>
+                <h3 class="notification-title">{{ notification.operationName }}</h3>
+                <p><span>Moneda:</span> {{ notification.currency === 'USD' ? 'Dólares' : 'Soles' }}</p>
+                <p><span>Monto:</span> {{ notification.amount | number:'1.2-2' }}</p>
+                <p><span>Comisión:</span> {{ notification.commision| number:'1.2-2' }}</p>
+                <p><span>Cuenta origen:</span> {{ notification.sourceAccount.accountNumber }}</p>
+                <p><span>Cuenta destino:</span> {{ notification.destinationAccount.accountNumber }}</p>
+              </div>
+
+              <div class="card__actions flex justify-end items-center">
+                <button type="button" mat-button (click)="approveOperation(notification)">
+                  <span class="flex gap-[6px]">
+                    <span class="leading-[var(--line-height-tight)]">Aprobar</span>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                      <use [attr.href]="'/icons/sprites.svg#accept'" />
+                    </svg>
+                  </span>
+                </button>
+                <button type="button" mat-button (click)="rejectOperation(notification)">
+                  <span class="flex gap-[6px]">
+                    <span class="leading-[var(--line-height-tight)]">Rechazar</span>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" class="text-[#1A73E8]">
+                      <use [attr.href]="'/icons/sprites.svg#reject'" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        }
+        } @else {
+        <p class="empty-message">
+          No hay notificaciones pendientes
+        </p>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- Tab Aprobadas -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="tab-label active">
+          Aprobadas ({{ approvedOperationsResource.isLoading()? '...' :
+          approvedCache().length }})
+        </span>
+      </ng-template>
+
+      <div class="notifications-list">
+        @if (approvedOperationsResource.isLoading()) {
+        <div class="flex justify-center items-center p-8">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        }
+
+        @else if (approvedOperationsResource.error()) {
+        <p class="error-message text-center p-4 text-red-600">
+          Error al cargar notificaciones: {{ approvedOperationsResource.error()?.message }}
+        </p>
+        }
+
+        @else if (approvedCache() !=null && approvedCache()!.length > 0) {
+        @for (notification of approvedCache(); track notification.operationId) {
+        <mat-card class="notification-card bg-white" appearance="outlined" [style.padding]="'18px'">
+          <mat-card-content [style.padding]="0">
+            <div class="flex gap-[12px] flex-col">
+              <div class="card__header">
+                <app-chip-notification>
+                  {{ notification.operationType | operationTypePipe }}
+                </app-chip-notification>
+              </div>
+
+              <div class="card_content flex flex-col gap-[12px]">
+                <p class="notification-date">{{ notification.operationDate | dateFormat }}</p>
+                <h3 class="notification-title">{{ notification.operationName }}</h3>
+                <p><span>Moneda:</span> {{ notification.currency === 'USD' ? 'Dólares' : 'Soles' }}</p>
+                <p><span>Monto:</span> {{ notification.amount | number:'1.2-2' }}</p>
+                <p><span>Comisión:</span> {{ notification.commision | number:'1.2-2' }}</p>
+                <p><span>Cuenta origen:</span> {{ notification.sourceAccount.accountNumber }}</p>
+                <p><span>Cuenta destino:</span> {{ notification.destinationAccount.accountNumber }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        }
+        } @else {
+        <p class="empty-message">
+          No hay notificaciones aprobadas
+        </p>
+        }
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

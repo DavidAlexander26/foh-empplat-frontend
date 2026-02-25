@@ -1,0 +1,20 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.stepper-overrides((
+    header-selected-state-icon-foreground-color: #fff,
+    header-selected-state-icon-background-color: var(--primary-blue),
+    header-selected-state-label-text-color: var(--primary-blue),
+    line-color: var(--background-disabled),
+    header-icon-foreground-color: var(--icon-disabled),
+    header-label-text-color: var(--text-disabled),
+    header-icon-background-color: var(--background-disabled),
+    header-done-state-icon-background-color: var(--primary-blue),
+    header-label-text-size:  1.6rem,
+    header-selected-state-label-text-size:  1.6rem,
+    header-error-state-label-text-size:  1.6rem,
+    header-label-text-weight: 400,
+    header-selected-state-label-text-weight: 400,
+    header-height: fit-content
+  ));
+}

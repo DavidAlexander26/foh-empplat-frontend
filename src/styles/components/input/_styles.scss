@@ -1,0 +1,8 @@
+input[matInput][type="password"] {
+  &::-ms-reveal,
+  &::-ms-clear,
+  &::-webkit-credentials-auto-fill-button {
+    display: none !important;
+  }
+}
+

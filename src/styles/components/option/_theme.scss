@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.option-overrides(
+    (
+      label-text-size: var(--font-size-md),
+    )
+  );
+}

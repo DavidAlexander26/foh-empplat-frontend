@@ -1,0 +1,129 @@
+<!-- Contenido principal -->
+<main>
+  <foh-grid [gap]="6">
+    <!-- Información del usuario -->
+    <foh-col [xs]="12">
+      <mat-card appearance="outlined" class="user-info-card">
+        <mat-card-header>
+          <svg mat-card-avatar width="18" height="18">
+            <use [attr.href]="'/icons/sprites.svg#user18'" />
+          </svg>
+          <mat-card-title>Información del usuario</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <div matListItemTitle class="list-item__label-name">Nombre</div>
+              <div matListItemLine>{{ userInfo?.nombre }}</div>
+            </mat-list-item>
+            <mat-list-item>
+              <div matListItemTitle class="list-item__label-name">DNI</div>
+              <div matListItemLine>{{ userInfo?.dni }}</div>
+            </mat-list-item>
+          </mat-list>
+          <mat-list>
+            <mat-list-item>
+              <div matListItemTitle class="list-item__label-name">Razón Social</div>
+              <div matListItemLine>{{ userInfo?.razonSocial }}</div>
+            </mat-list-item>
+            <mat-list-item>
+              <div matListItemTitle class="list-item__label-name">RUC</div>
+              <div matListItemLine>{{ userInfo?.ruc }}</div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </foh-col>
+
+    <!-- Información de cuentas -->
+    <foh-col [xs]="12" class="accounts-sections">
+      <mat-card appearance="outlined">
+        <mat-card-header>
+          <svg mat-card-avatar width="18" height="18">
+            <use [attr.href]="'/icons/sprites.svg#account18'" />
+          </svg>
+          <mat-card-title>Información de cuenta</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <!-- Tabla de cuentas responsiva -->
+          <div class="table-scroll-container">
+            <table mat-table [dataSource]="dataSource" matSort #sort="matSort">
+              <!-- Columna Número de Cuenta -->
+              <ng-container matColumnDef="numeroCuenta">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Número de Cuenta</th>
+                <td mat-cell *matCellDef="let account">
+                  <section>
+                    <span>{{ account.numeroCuenta }}</span>
+                    <button
+                      mat-icon-button
+                      (click)="copyToClipboard(account.numeroCuenta)"
+                      matTooltip="Copiar número de cuenta"
+                    >
+                      <mat-icon>content_copy</mat-icon>
+                    </button>
+                  </section>
+                </td>
+              </ng-container>
+
+              <!-- Columna CCI -->
+              <ng-container matColumnDef="cci">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>CCI</th>
+                <td mat-cell *matCellDef="let account">
+                  <section>
+                    <span>{{ account.cci }}</span>
+                    <button
+                      mat-icon-button
+                      (click)="copyToClipboard(account.cci)"
+                      matTooltip="Copiar CCI"
+                    >
+                      <mat-icon>content_copy</mat-icon>
+                    </button>
+                  </section>
+                </td>
+              </ng-container>
+
+              <!-- Columna Saldo Disponible -->
+              <ng-container matColumnDef="saldoDisponible">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Saldo Disponible</th>
+                <td mat-cell *matCellDef="let account">
+                  <span>{{ formatAmount(account.saldoDisponible) }}</span>
+                </td>
+              </ng-container>
+
+              <!-- Columna Saldo Retenido -->
+              <ng-container matColumnDef="saldoRetenido">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Saldo Retenido</th>
+                <td mat-cell *matCellDef="let account">
+                  <span>{{ formatAmount(account.saldoRetenido) }}</span>
+                </td>
+              </ng-container>
+
+              <!-- Columna Moneda -->
+              <ng-container matColumnDef="moneda">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Moneda</th>
+                <td mat-cell *matCellDef="let account">
+                  <span>{{ account.moneda }}</span>
+                </td>
+              </ng-container>
+
+              <!-- Columna Estado -->
+              <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado de la Cuenta</th>
+                <td mat-cell *matCellDef="let account">
+                  <mat-chip [ngClass]="getStatusClass(account.estado)">
+                    {{ account.estado }}
+                  </mat-chip>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </foh-col>
+  </foh-grid>
+</main>

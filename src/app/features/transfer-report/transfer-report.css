@@ -1,0 +1,51 @@
+/* Estilo base para la forma de la etiqueta (redondeada y centrada) */
+.badge {
+  padding: 4px 12px;
+  border-radius: 16px; /* Bordes redondeados como un chip */
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  min-width: 90px; /* Para que todos tengan el mismo ancho */
+}
+
+/* --- COLORES SEGÚN EL ESTADO --- */
+
+/* Caso: Procesando (Amarillo/Naranja) */
+.status-procesando {
+  background-color: #FFF8E1;
+  color: #F57C00;
+  border: 1px solid #FFE082;
+}
+
+/* Caso: Exitoso (Verde) */
+.status-exitoso {
+  background-color: #E8F5E9;
+  color: #2E7D32;
+  border: 1px solid #A5D6A7;
+}
+
+/* Caso: Fallido (Rojo) */
+.status-fallido {
+  background-color: #FFEBEE;
+  color: #C62828;
+  border: 1px solid #EF9A9A;
+}
+
+/* Caso por defecto (Gris) */
+.status-default {
+  background-color: #F5F5F5;
+  color: #616161;
+}
+.contenedor-tabla {
+  max-height: 400px; /* Ajusta este valor a la altura que desees */
+  overflow: auto;    /* Muestra scroll si el contenido es muy largo */
+}
+
+/* Opcional: Esto hace que la cabecera (títulos) se quede fija al hacer scroll */
+.contenedor-tabla th {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: white; /* Necesario para que no sea transparente */
+}

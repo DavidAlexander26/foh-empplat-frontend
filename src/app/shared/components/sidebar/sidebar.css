@@ -1,0 +1,131 @@
+/* Container principal */
+.sidebar-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 153px;
+  height: 100vh;
+  background-color: #00B1FF;
+  position: fixed;
+  left: 0;
+  border: 0;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  overflow-y: auto;
+  box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.11);
+}
+
+/* Header del sidebar */
+.sidebar-header {
+  padding: 32px 24px 24px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+
+.subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: var(--line-height-normal);
+}
+
+
+.nav-list {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+
+  overflow: visible;
+  gap: 6px;
+}
+
+.nav-list li {
+  padding: 0;
+  margin: 0;
+  width: 90%;
+  align-self: flex-end;
+}
+
+.nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 12px 24px 12px 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+
+
+.nav-item.active-item::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #fff;
+}
+
+.nav-item.active-item {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 22px 0 0 22px;
+}
+
+
+.nav-icon {
+  color: rgba(255, 255, 255, 0.9);
+  margin-right: 16px;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-label {
+  font-weight: 500;
+  font-size: 14px;
+  color: inherit;
+  text-align: center;
+  line-height: var(--line-height-normal);
+}
+
+/* Estilos para el botón de reportes */
+.reports-trigger {
+  background: var(--primary-light-blue);
+  border: none;
+  cursor: pointer;
+  color: white;
+  width: 100%;
+  padding: 12px 24px 12px 0;
+  transition: all 0.3s ease;
+}
+
+.reports-trigger:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 22px 0 0 22px;
+}
+

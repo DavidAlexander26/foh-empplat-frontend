@@ -1,0 +1,65 @@
+// Estilos específicos para elementos de tabla que no se pueden manejar solo con tokens
+
+table[mat-table] {
+  // Headers con efectos hover
+  th[mat-header-cell] {        
+    &:hover {
+      background-color: #f5f5f5;
+      cursor: pointer;
+    }
+
+    // Estilos para headers ordenables
+    &.mat-sort-header-sorted {
+      color: var(--primary-blue);
+    }
+
+    .mat-sort-header-content {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .mat-sort-header-arrow {
+      transition: color var(--table-transition-duration) var(--table-transition-timing);
+    }
+
+    &:hover .mat-sort-header-arrow {
+      color: var(--primary-blue);
+    }
+  }
+
+  // Celdas de datos
+  td[mat-cell] {
+    section {
+      display: flex;
+      align-items: center;
+
+      button[mat-icon-button] {
+        width: var(--table-action-button-size);
+        height: var(--table-action-button-size);
+        color: var(--table-action-button-color);
+        transition: all var(--table-transition-duration) var(--table-transition-timing);
+
+        &:hover {
+          color: var(--table-action-button-color);
+          background-color: var(--table-action-button-hover-bg);
+        }
+
+        mat-icon {
+          font-size: var(--table-action-button-icon-size);
+          width: var(--table-action-button-icon-size);
+          height: var(--table-action-button-icon-size);
+        }
+      }
+    }
+  }
+
+  // Filas con efectos hover
+  tr[mat-row] {
+    transition: background-color var(--table-transition-duration) var(--table-transition-timing);
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}

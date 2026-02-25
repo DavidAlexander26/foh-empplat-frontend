@@ -1,0 +1,50 @@
+<div class="table-container max-h-[500px] overflow-auto">
+    <table mat-table [dataSource]="dataSource" matSort class="w-[1400px]" >
+        <ng-container matColumnDef="lote">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Lote</th>
+            <td mat-cell *matCellDef="let element">{{ element.lote }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="documento">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
+          <td mat-cell *matCellDef="let element">{{ element.documento }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="numeroCuenta">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Número de Cuenta / CCI</th>
+          <td mat-cell *matCellDef="let element">{{ element.numeroCuenta }}</td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="tipoAbono">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Abono</th>
+            <td mat-cell *matCellDef="let element">{{ element.tipoAbono }}</td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="monto">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Monto</th>
+            <td mat-cell *matCellDef="let element">{{ element.monto }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fechaCreacion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de movimientos </th>
+          <td mat-cell *matCellDef="let row"> {{ row.fechaCreacion }} </td>
+        </ng-container>
+
+
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+</div>
+<mat-paginator [length]="totalRecords()" [pageSize]="size()" [pageIndex]="page()"
+    [pageSizeOptions]="pageSizeOptions" aria-label="Seleccionar página">
+</mat-paginator>

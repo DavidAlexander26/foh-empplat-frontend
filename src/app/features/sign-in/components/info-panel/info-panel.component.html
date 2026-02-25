@@ -1,0 +1,26 @@
+<section class="info-panel">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Portal Empleador</h1>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p>
+          Accede de forma segura a todas las herramientas y servicios diseñados para optimizar la
+          gestión de su empresa.
+        </p>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-list role="list">
+        @for (feature of features; track feature.text) {
+          <mat-list-item role="listitem">
+            <mat-icon matListItemIcon>{{ feature.icon }}</mat-icon>
+            <span matListItemTitle>{{ feature.text }}</span>
+          </mat-list-item>
+        }
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</section>

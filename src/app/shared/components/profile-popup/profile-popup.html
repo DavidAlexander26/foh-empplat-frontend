@@ -1,0 +1,17 @@
+<div class="profile-popup-content">
+    <button mat-menu-item (click)="onViewProfile()" class="profile-menu-item">
+      <svg width="20" height="20" class="menu-icon">
+        <use [attr.href]="'/icons/sprites.svg#profile'" />
+      </svg>
+      <span>Ver mi perfil</span>
+    </button>
+    
+    <mat-divider></mat-divider>
+    
+    <button mat-menu-item (click)="onLogout()" class="profile-menu-item logout-item">
+      <svg width="20" height="20" class="menu-icon">
+        <use [attr.href]="'/icons/sprites.svg#logout'" />
+      </svg>
+      <span>Cerrar sesión</span>
+    </button>
+  </div>
